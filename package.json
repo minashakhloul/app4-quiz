@@ -1,0 +1,14 @@
+{
+    "name": "quiz"
+  , "version": "0.0.1"
+  , "private": true
+  , "scripts" : {
+		"start": "node app.js"
+  }
+  , "dependencies": {
+      "express": "2.5.8"
+    , "jade": ">= 0.0.1"
+    , "socket.io": "*"
+    
+  }
+}
