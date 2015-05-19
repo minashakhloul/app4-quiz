@@ -7,6 +7,10 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' })
 };
 
+exports.quiz = function(req, res){
+  res.render('question', { title: 'Quiz', idSession : 0 })
+};
+
 exports.poke = function(req, res){
   res.render('poke', { title: 'Poke' })
 };

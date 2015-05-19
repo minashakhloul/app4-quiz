@@ -30,27 +30,57 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
-app.get('/poke', routes.poke);
-app.get('/peek', routes.peek);
+app.get('/quiz', routes.quiz);
+//app.get('/poke', routes.poke);
+//app.get('/peek', routes.peek);
 
 io.on('connection', function(socket) {
 	console.log(" a user connected:  " +  socket.id );
-	socket.on('poke', function(data) {
+    /*
+    socket.on('poke', function(data) {
 		console.log(" a user send a poke:  " + JSON.stringify(data) );
 		socket.broadcast.emit('peek', data);
 	});
+	*/
+});
+
+var nspQuiz = io.of('/quiz');
+nspQuiz.on( 'connection', function(socket) {
+  console.log( 'someone connected to quiz : ' + socket.id );
+  socket.on( 'reqQ', function(data) {
+    console.log( " a user send a request; idSession:  " + data.id );
+    var newQ = { title : "question's title", suggestions: getRandomArray(["good1","good2"], ["bad1","bad2"]) };
+    socket.emit( "newQuestion", newQ );
+  });
 });
 
 var nsp_poke = io.of('/poke');
 nsp_poke.on('connection', function(socket){
   console.log('someone connected to poke: ' + socket.id);
+  socket.on('poke', function(data) {
+    console.log(" a user send a poke:  " + JSON.stringify(data) );
+    socket.broadcast.emit('peek', data);
+  });
 });
 
 var nsp_peek = io.of('/peek');
 nsp_peek.on('connection', function(socket){
   console.log('someone connected to peek: ' + socket.id);
+
 });
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
+
+function getRandomArray( array1, array2 ) {
+  var tmp = array1.concat(array2);
+  var result = new Array(tmp.length);
+
+  for( var i = 0; i < result.length; i++ ) {
+    var rand = Math.floor((Math.random() * (tmp.length - 1)) + 0);
+    result[i] = tmp[rand];
+    tmp.splice(rand, 1);
+  }
+  return result;
+}
