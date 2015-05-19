@@ -5,6 +5,8 @@
 var express = require('express')
   , routes = require('./routes');
 
+var lobbyController = require('./routes/lobby-controller')
+
 //var app = module.exports = express.createServer();
 var app = express.createServer();
 var io = require('socket.io')(app);
@@ -28,11 +30,15 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+lobbyController.initManager(io);
+
 // Routes
 app.get('/', routes.index);
 app.get('/quiz', routes.quiz);
 //app.get('/poke', routes.poke);
 //app.get('/peek', routes.peek);
+
+app.get('/roomlist', lobbyController.roomlist);
 
 io.on('connection', function(socket) {
 	console.log(" a user connected:  " +  socket.id );
