@@ -1,0 +1,16 @@
+//Created by mina on 20/05/15.
+script(type='text/javascript').
+   $(start);
+   function start() {
+      var socket = io.connect('http://localhost:3000/databaseTest');
+      $("#poke-btn").click(function () {
+         $.ajax('/databaseTest').done(function(data) {
+            $('#results').html(data);
+         });
+      });
+   };
+h1= title
+button(id="poke-btn", class="btn", data-action="bea").
+   Test
+span(id = 'results', style="font-size: 1.25em; margin-top:2%" href="/graphing").glyphicon.glyphicon-pencil
+   | Results
