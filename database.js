@@ -20,6 +20,11 @@ function Question(title, prop) {
     }
 }
 
+function Quiz(title) {
+    this.title = title;
+    this.questions = [];
+}
+
 function Database(mongoClient, url) {
     this.mongoClient = mongoClient;
     this.url = url;

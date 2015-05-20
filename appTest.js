@@ -11,6 +11,7 @@ var express = require('express')
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
+var databaseTest = require('./routes/databaseTest')
 
 //var app = module.exports = express.createServer();
 var app = express();
@@ -45,6 +46,9 @@ app.get('/session', function (req, res, next) {
 lobbyController.initManager(io);
 
 app.get('/quizTimerTest',QuizTimerControllerTest.test);
+app.get('/startTest', databaseTest.startTest)
+app.get('/testDb', databaseTest.testDb)
+
 
 
 io.on('connection', function(socket) {
