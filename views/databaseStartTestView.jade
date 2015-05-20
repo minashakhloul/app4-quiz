@@ -5,10 +5,12 @@ script(type='text/javascript').
         var socket = io.connect('http://localhost:3000/databaseTest');
         $("#poke-btn").click(function () {
             $.ajax('/testDb').done(function (data) {
-                console.log("Test Succeeded !")
+                $('#quiz-list').html(data);
             });
         });
     };
 h1= title
 button(id="poke-btn", class="btn", data-action="bea").
     Test
+
+div(id="quiz-list")
