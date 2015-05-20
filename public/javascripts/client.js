@@ -3,7 +3,7 @@ Client = {};
 
 //Connect to the given namespace
 Client.connect = function(ns) {
-	return io.connect('http://localhost:3000/');
+	return io.connect('http://localhost:3000/' + ns);
 }
 
 Client.Lobby = ( function() {

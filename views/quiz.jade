@@ -1,28 +1,25 @@
-//
-   Created by yazid on 19/05/15.
+extends layout
 
-script(type='text/javascript').
-   //$(getQ);
+block content
+   script(type='text/javascript').
 
-   var clientSocket = io.connect('http://localhost:3000/quiz');
+      var clientSocket = Client.connect('quiz');//io.connect('http://localhost:3000/quiz');
 
-   clientSocket.on('startQ', function(data) {
-      getQ();
-   });
-
-   //socket.emit( 'reqQ', { id : #{idSession} } );
-
-
-   function getQ() {
-      $.ajax({
-         url: "/getQuestion",
-         type:'GET',
-         success: function ( data ) {
-            $("#question").html( data );
-         }
+      clientSocket.on('startQ', function(data) {
+         getQ();
       });
-   }
 
-h1= title
 
-div(id="question")
+      function getQ() {
+         $.ajax({
+            url: "/getQuestion",
+            type:'GET',
+            success: function ( data ) {
+               $("#question").html( data );
+            }
+         });
+      }
+
+   h1= title
+
+   div(id="question")

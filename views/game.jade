@@ -1,24 +1,27 @@
-script(type='text/javascript').
-    $(start);
-    function start() {
-        Client.Lobby.setup($('#room-list'));
-    };
-h1 ultra quiz
-h2 New game
-form(action='newroom' method='post')
-    table
-        tbody
-            tr
-                td Quiz
-                td
-                    select()
-            tr
-                td Max Player
-                td
-                    input(type='number')
-            tr
-                td
-                    input(type='submit')
-h2 Games
-p List of available rooms:
-div(id='room-list')
+extends layout
+
+block content
+   script(type='text/javascript').
+       $(start);
+       function start() {
+           Client.Lobby.setup($('#room-list'));
+       };
+   h1 ultra quiz
+   h2 New game
+   form(action='newroom' method='post')
+       table
+           tbody
+               tr
+                   td Quiz
+                   td
+                       select()
+               tr
+                   td Max Player
+                   td
+                       input(type='number')
+               tr
+                   td
+                       input(type='submit')
+   h2 Games
+   p List of available rooms:
+   div(id='room-list')

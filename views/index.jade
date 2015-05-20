@@ -1,22 +1,26 @@
-script(type='text/javascript').
-	
-	$(start);
-	
-	function start() {
-		Client.Lobby.setup($('#room-list'));
-	};
-	
-h1 ultra quiz
+extends layout
 
-h2 New user
-form(action='newuser' method='post')
-	table
-		tbody
-			tr
-				td User
-				td
-					input(type='textbox')
-			tr
-				td
-					input(type='submit')
+block content
+
+	script(type='text/javascript').
+
+		$(start);
+
+		function start() {
+			Client.Lobby.setup($('#room-list'));
+		};
+
+	h1 ultra quiz
+
+	h2 New user
+	form(action='newuser' method='post')
+		table
+			tbody
+				tr
+					td User
+					td
+						input(type='textbox')
+				tr
+					td
+						input(type='submit')
 
