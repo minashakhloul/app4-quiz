@@ -11,6 +11,7 @@
     "express": "*",
     "express-session": "^1.11.2",
     "jade": ">= 0.0.1",
+    "mongodb": "^2.0.33",
     "socket.io": "*"
   }
 }
