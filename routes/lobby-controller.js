@@ -8,9 +8,12 @@ exports.initManager = function(__io) {
 	io = __io;
 	manager = new rooms.Manager(io);
 
+	// add some random rooms
+
 	console.log("RoomManager initialized");
  };
 
 exports.roomlist = function(req, res) {
-	res.send(manager.getAll());
+	console.log(manager.getAll());
+	res.render('roomlist', { rooms : manager.getAll(), layout : false } )
 }

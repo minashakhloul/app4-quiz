@@ -2,16 +2,13 @@ script(type='text/javascript').
 	
 	$(start);
 	
-	function addRooms(data) {
-		console.log(data);
-	}
-
 	function start() {
-		console.log('lol');
-		Client.Lobby.getRooms(addRooms);
+		Client.Lobby.getRooms($('#room-list'));
 	};
 	
 h1= title
 p List of available rooms:
+
+div(id='room-list')
 
 

@@ -10,8 +10,10 @@ Client.Lobby = ( function() {
 
 	var pub = {};
 
-	pub.getRooms = function(cb) {
-		$.getJSON('/roomlist', cb);
+	pub.getRooms = function(el) {
+		$.ajax('/roomlist').done(function(data) {
+			el.html(data);
+		});
 	};
 
 	return pub; 
