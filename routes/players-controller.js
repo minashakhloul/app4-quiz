@@ -25,12 +25,12 @@ exports.newPlayer = function(req, res){
         if(!req.body.nickname) {    res.redirect('/');  }
         else {
 
-            if(!sess.player) {
-                var p = new players.Player( req.body.nickname );
+            if (!sess.player) {
+                var p = new players.Player(req.body.nickname);
                 sess.player = p;
             }
+            res.redirect('/game');
         }
-        res.redirect('/game');
     }
 
 

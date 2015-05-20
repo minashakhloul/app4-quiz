@@ -39,11 +39,7 @@ playersController.init(io);
 
 // Routes
 app.get('/', home.index);
-app.route('/newPlayer')
-    .get(playersController.newPlayer)
-    .post(playersController.newPlayer);
-
-//app.post('/newPlayer', playersController.newPlayer);
+app.all('/newPlayer', playersController.newPlayer);
 app.get('/quiz', quizController.quiz);
 app.get('/getQuestion', quizController.getQuestion);
 app.get('/game', lobbyController.game);
