@@ -6,9 +6,10 @@
 		"start": "node app.js"
   }
   , "dependencies": {
-      "express": "2.5.8"
-    , "jade": ">= 0.0.1"
-    , "socket.io": "*"
+      "express": "2.5.8",
+  "jade": ">= 0.0.1",
+  "socket.io": "*",
+  "express-session": "^1.7.6"
     
   }
 }
