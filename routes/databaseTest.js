@@ -28,8 +28,15 @@ exports.testDb = function (req, res) {
         //db.insertQuiz(quiz, 'quizList');
         db.selectAllQuizes('quizList');
 
-        db.selectAllQuizesIds('quizList');
-        db.selectQuiz(mongodb, '555b921aad41f88e2b2fd217', 'quizList');
+        db.selectAllQuizesIds('quizList', function (data) {
+            console.log(JSON.stringify(data));
+            //res.render('databaseTestView', {title: 'Result', quizesIds: data, layout: false});
+        });
+
+        db.selectQuiz(mongodb, '555b921aad41f88e2b2fd217', 'quizList', function (data) {
+            console.log(JSON.stringify(data));
+            //res.render('databaseTestView', {title: 'Result', quiz: data, layout: false});
+        });
 
         //db.connection.close(); it's closed before we call the functions so we'll errors!!
     }
