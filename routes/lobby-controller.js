@@ -24,4 +24,6 @@ exports.roomlist = function(req, res) {
 exports.newroom = function(req, res) {
 	console.log('creating room');
 	console.log(req.params);
+
+	res.redirect('/quiz');
 }

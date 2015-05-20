@@ -27,7 +27,7 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-app.configure('production', function(){
+app.configure('production', function() {
   app.use(express.errorHandler());
 });
 
@@ -41,6 +41,7 @@ app.get('/getQuestion', quizController.getQuestion);
 
 app.get('/roomlist', lobbyController.roomlist);
 app.post('/newroom', lobbyController.newroom);
+
 
 io.on('connection', function(socket) {
 	//console.log(" a user connected:  " +  socket.id );
