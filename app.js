@@ -45,29 +45,24 @@ io.on('connection', function(socket) {
 	//console.log(" a user connected:  " +  socket.id );
 });
 
+app.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now());
+  next();
+});
+
 
 
 var nsp_quiz = io.of('/quiz');
+
 nsp_quiz.on('connection', function(clientSocket){
-
-  console.log('someone connected to start the Quiz: ' + socket.id);
-
-  clientSocket.emit();
+  console.log('someone connected to start the Quiz: ' + clientSocket.id);
+  clientSocket.emit('startQ', {q : "question"});
 
 });
+
+
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
 
-function getRandomArray( array1, array2 ) {
-  var tmp = array1.concat(array2);
-  var result = new Array(tmp.length);
-
-  for( var i = 0; i < result.length; i++ ) {
-    var rand = Math.floor((Math.random() * (tmp.length - 1)) + 0);
-    result[i] = tmp[rand];
-    tmp.splice(rand, 1);
-  }
-  return result;
-}
