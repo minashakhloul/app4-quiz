@@ -1,0 +1,28 @@
+//
+   Created by yazid on 19/05/15.
+
+script(type='text/javascript').
+   //$(getQ);
+
+   var clientSocket = io.connect('http://localhost:3000/quiz');
+
+   clientSocket.on('startQ', function(data) {
+      getQ();
+   });
+
+   //socket.emit( 'reqQ', { id : #{idSession} } );
+
+
+   function getQ() {
+      $.ajax({
+         url: "/getQuestion",
+         type:'GET',
+         success: function ( data ) {
+            $("#question").html( data );
+         }
+      });
+   }
+
+h1= title
+
+div(id="question")

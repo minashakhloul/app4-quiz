@@ -1,0 +1,14 @@
+h1 #{tmp.q}
+
+- var answerType = "checkbox"
+if (tmp.nbAnswers == 1)
+    - answerType = "radio"
+
+each p in tmp.prop
+    span
+        input(type=answerType, name="prop", value=p.s, checked=false).
+        | #{p.s}
+        br
+
+button(id="validate-btn", class="btn", data-action="bea").
+    Valider
