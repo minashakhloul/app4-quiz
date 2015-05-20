@@ -42,31 +42,17 @@ app.get('/getQuestion', quizController.getQuestion);
 app.get('/roomlist', lobbyController.roomlist);
 
 io.on('connection', function(socket) {
-	console.log(" a user connected:  " +  socket.id );
+	//console.log(" a user connected:  " +  socket.id );
 });
 
-var nspQuiz = io.of('/quiz');
-nspQuiz.on( 'connection', function(socket) {
-  console.log( 'someone connected to quiz : ' + socket.id );
-  socket.on( 'reqQ', function(data) {
-    console.log( " a user send a request; idSession:  " + data.id );
-    //var newQ = { title : "question's title", suggestions: getRandomArray(["good1","good2"], ["bad1","bad2"]) };
-    socket.emit( "newQuestion", newQ );
-  });
-});
 
-var nsp_poke = io.of('/poke');
-nsp_poke.on('connection', function(socket){
-  console.log('someone connected to poke: ' + socket.id);
-  socket.on('poke', function(data) {
-    console.log(" a user send a poke:  " + JSON.stringify(data) );
-    socket.broadcast.emit('peek', data);
-  });
-});
 
-var nsp_peek = io.of('/peek');
-nsp_peek.on('connection', function(socket){
-  console.log('someone connected to peek: ' + socket.id);
+var nsp_quiz = io.of('/quiz');
+nsp_quiz.on('connection', function(clientSocket){
+
+  console.log('someone connected to start the Quiz: ' + socket.id);
+
+  clientSocket.emit();
 
 });
 
