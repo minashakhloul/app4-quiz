@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Rooms' })
+  res.render('index', {title: 'Rooms'})
 };
 
 exports.poke = function(req, res){

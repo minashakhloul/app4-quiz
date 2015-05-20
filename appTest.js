@@ -10,9 +10,13 @@ var express = require('express')
 
 var lobbyController = require('./routes/lobby-controller')
 var QuizTimerControlerTest = require('./routes/QuizTimerControllerTest')
+var databaseTest = require('./routes/databaseTest')
+
 //var app = module.exports = express.createServer();
 var app = express.createServer();
 var io = require('socket.io')(app);
+databaseTest.setIO(io);
+
 app.configure(function () {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -36,6 +40,8 @@ app.get('/poke', routes.poke);
 app.get('/peek', routes.peek);
 app.get('/roomlist', lobbyController.roomlist);
 app.get('/quizTimerTest', QuizTimerControlerTest.test);
+app.get('/startTest', databaseTest.startTest)
+app.get('/testDb', databaseTest.testDb)
 
 // *********  Launch ********* //
 
