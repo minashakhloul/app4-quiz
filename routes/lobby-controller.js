@@ -1,4 +1,3 @@
-
 var rooms = require('../services/rooms');
 
 var io;
@@ -10,6 +9,10 @@ exports.initManager = function(__io) {
 
 	console.log("RoomManager initialized");
  };
+
+exports.game = function(req, res) {
+	res.render('game', { title: 'Game'})
+}
 
 exports.roomlist = function(req, res) {
 	res.send(manager.getAll());

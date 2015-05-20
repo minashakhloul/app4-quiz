@@ -3,9 +3,10 @@
  */
 
 var express = require('express')
-  , routes = require('./routes');
+  , home = require('./routes/index');
 
-var lobbyController = require('./routes/lobby-controller')
+var lobbyController = require('./routes/lobby-controller');
+var quizController = require('./routes/quiz-controller');
 
 //var app = module.exports = express.createServer();
 var app = express.createServer();
@@ -32,22 +33,16 @@ app.configure('production', function(){
 
 lobbyController.initManager(io);
 
+
 // Routes
-app.get('/', routes.index);
-app.get('/quiz', routes.quiz);
-//app.get('/poke', routes.poke);
-//app.get('/peek', routes.peek);
+app.get('/', home.index);
+app.get('/quiz', quizController.quiz);
+app.get('/getQuestion', quizController.getQuestion);
 
 app.get('/roomlist', lobbyController.roomlist);
 
 io.on('connection', function(socket) {
 	console.log(" a user connected:  " +  socket.id );
-    /*
-    socket.on('poke', function(data) {
-		console.log(" a user send a poke:  " + JSON.stringify(data) );
-		socket.broadcast.emit('peek', data);
-	});
-	*/
 });
 
 var nspQuiz = io.of('/quiz');
@@ -55,7 +50,7 @@ nspQuiz.on( 'connection', function(socket) {
   console.log( 'someone connected to quiz : ' + socket.id );
   socket.on( 'reqQ', function(data) {
     console.log( " a user send a request; idSession:  " + data.id );
-    var newQ = { title : "question's title", suggestions: getRandomArray(["good1","good2"], ["bad1","bad2"]) };
+    //var newQ = { title : "question's title", suggestions: getRandomArray(["good1","good2"], ["bad1","bad2"]) };
     socket.emit( "newQuestion", newQ );
   });
 });
