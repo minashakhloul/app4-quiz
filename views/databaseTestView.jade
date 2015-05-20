@@ -1,4 +1,7 @@
 //Created by mina on 20/05/15.
 h1= title
 #container.col
-    p data
+    p
+    ul
+        each question in quizes.questions
+            li= question.q

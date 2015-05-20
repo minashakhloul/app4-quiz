@@ -71,7 +71,7 @@ Database.prototype.selectQuiz = function (mongodb, idQuiz, collectionString) {
     }).bind(this));
 }
 
-Database.prototype.selectAllQuizes = function (collectionString) {
+Database.prototype.selectAllQuizes = function (collectionString, cb) {
     var collection = this.connection.collection(collectionString);
     collection.find({}).toArray((function (err, documents) {
         if (err) {
@@ -79,7 +79,8 @@ Database.prototype.selectAllQuizes = function (collectionString) {
             throw new Error;
         } else {
             console.log("Retrieved all quizes");
-            this.quizes = documents;
+            //this.quizes = documents;
+            cb(documents);
             console.log(JSON.stringify(this.quizes));
         }
     }).bind(this));
