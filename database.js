@@ -54,18 +54,19 @@ Database.prototype.insertQuiz = function (quiz, collectionString) {
     }).bind(this));
 }
 
-Database.prototype.selectQuiz = function (mongodb, idQuiz, collectionString) {
+Database.prototype.selectQuiz = function (mongodb, idQuiz, collectionString, cb) {
     var collection = this.connection.collection(collectionString);
     var id = mongodb.ObjectId(idQuiz);
     collection.findOne({_id: id}, (function (err, document) {
         if (err) {
             console.log("Error while retrieving quiz with id :" + idQuiz);
-            throw new Error;
+            cb(err);
         } else {
             if (document != null) {
                 console.log("Retrieved quiz");
-                this.quiz = document;
-                console.log(JSON.stringify(this.quiz));
+                cb(document);
+                // this.quiz = document;
+                //console.log(JSON.stringify(this.quiz));
             }
         }
     }).bind(this));
@@ -76,26 +77,27 @@ Database.prototype.selectAllQuizes = function (collectionString, cb) {
     collection.find({}).toArray((function (err, documents) {
         if (err) {
             console.log("Error while retrieving all quizes: " + err);
-            throw new Error;
+            cb(err);
         } else {
             console.log("Retrieved all quizes");
             //this.quizes = documents;
             cb(documents);
-            console.log(JSON.stringify(this.quizes));
+            //console.log(JSON.stringify(this.quizes));
         }
     }).bind(this));
 }
 
-Database.prototype.selectAllQuizesIds = function (collectionString) {
+Database.prototype.selectAllQuizesIds = function (collectionString, cb) {
     var collection = this.connection.collection(collectionString);
     collection.find({}, {_id_: true}).toArray((function (err, ids) {
         if (err) {
             console.log("Error while retrieving all quizes ids");
-            throw new Error;
+            cb(err);
         } else {
             console.log("Retrieved all quizes ids");
-            this.quizesIds = ids;
-            console.log(JSON.stringify(this.quizesIds));
+            cb(ids);
+            //this.quizesIds = ids;
+            //console.log(JSON.stringify(this.quizesIds));
         }
     }).bind(this));
 }
