@@ -12,9 +12,9 @@ function Room( id, maxPlayer, players, quiz ) {
 }
 
 function RoomManager(io) {
+	this.io    = io;
 	this.rooms = [];
 
-	this.add({ top : 'lel'});
 }
 
 Room.prototype.start = function() {

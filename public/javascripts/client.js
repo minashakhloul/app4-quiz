@@ -9,11 +9,14 @@ Client.connect = function(ns) {
 Client.Lobby = ( function() {
 
 	var pub = {};
+	var roomListElem = undefined;
 
-	pub.getRooms = function(el) {
+	pub.setup = function(el) {
 		$.ajax('/roomlist').done(function(data) {
 			el.html(data);
 		});
+
+		roomListElem = el;
 	};
 
 	return pub; 

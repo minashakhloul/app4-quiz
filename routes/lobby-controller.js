@@ -20,3 +20,8 @@ exports.roomlist = function(req, res) {
 	console.log(manager.getAll());
 	res.render('roomlist', { rooms : manager.getAll(), layout : false } )
 }
+
+exports.newroom = function(req, res) {
+	console.log('creating room');
+	console.log(req.params);
+}
