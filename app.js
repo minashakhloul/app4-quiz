@@ -3,32 +3,42 @@
  */
 
 var express = require('express')
-  , home = require('./routes/index');
+  , home = require('./routes/index')
+    , expressSession = require('express-session')
+    , bodyParser     = require('body-parser')
+    , cookieParser   = require('cookie-parser');
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
 
 //var app = module.exports = express.createServer();
-var app = express.createServer();
-var io = require('socket.io')(app);
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // Configuration
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
 
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
 
-app.configure('production', function(){
-  app.use(express.errorHandler());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
+app.use(cookieParser());
+app.use(expressSession({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+app.get('/session', function (req, res, next) {
+  console.log(req.session);
+  if(!req.session.count) {
+      req.session.count = 0;
+  }
+  req.session.count++;
+  res.send('count  : ' + req.session.count + ' id:' + req.sessionID);
 });
 
 lobbyController.initManager(io);
@@ -45,12 +55,6 @@ io.on('connection', function(socket) {
 	//console.log(" a user connected:  " +  socket.id );
 });
 
-app.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-
 
 var nsp_quiz = io.of('/quiz');
 
@@ -62,7 +66,5 @@ nsp_quiz.on('connection', function(clientSocket){
 
 
 
-app.listen(3000, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+server.listen(3000);
 

@@ -1,0 +1,13 @@
+h1= title
+
+script(type='text/javascript').
+   $(start);
+   function addRooms(data) {
+      console.log(data);
+   }
+   function start() {
+      console.log('lol');
+      Client.Lobby.getRooms(addRooms);
+   };
+
+p List of available rooms:
