@@ -26,10 +26,7 @@ exports.testDb = function (req, res) {
         var q2 = new database.Question("Question 2", [prop1, prop2]);
         var quiz = {title: 'quiz1', questions: [q1, q2]};
         //db.insertQuiz(quiz, 'quizList');
-        db.selectAllQuizes('quizList', function (data) {
-            console.log(JSON.stringify(data));
-            res.render('databaseTestView', {title: 'Result', quizes: data, layout: false});
-        });
+        db.selectAllQuizes('quizList');
 
         db.selectAllQuizesIds('quizList', function (data) {
             console.log(JSON.stringify(data));
@@ -46,4 +43,5 @@ exports.testDb = function (req, res) {
 
     db.connect(db.mongoClient, db.url);
 
+    res.render('databaseTestView', {title: 'Result', data: db});
 }
