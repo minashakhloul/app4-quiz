@@ -8,23 +8,15 @@ script(type='text/javascript').
 	
 h1 ultra quiz
 
-h2 New game
-form(action='newroom' method='post')
+h2 New user
+form(action='newuser' method='post')
 	table
 		tbody
 			tr
-				td Quiz
+				td User
 				td
-					select()
-			tr
-				td Max Player
-				td
-					input(type='number')
+					input(type='textbox')
 			tr
 				td
 					input(type='submit')
 
-h2 Games
-p List of available rooms:
-
-div(id='room-list')
