@@ -10,6 +10,7 @@ var express = require('express')
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
+var playersController = require('./routes/players-controller');
 
 //var app = module.exports = express.createServer();
 var app = express();
@@ -23,6 +24,7 @@ var io = require('socket.io')(server);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))    // parse application/x-www-form-urlencoded
 app.use(express.static(__dirname + '/public'));
 app.use(cookieParser());
 app.use(expressSession({
@@ -32,23 +34,19 @@ app.use(expressSession({
 }));
 
 
-app.get('/session', function (req, res, next) {
-  console.log(req.session);
-  if(!req.session.count) {
-    req.session.count = 0;
-  }
-  req.session.count++;
-  res.send('count  : ' + req.session.count + ' id:' + req.sessionID);
-});
-
 lobbyController.initManager(io);
-
+playersController.init(io);
 
 // Routes
 app.get('/', home.index);
+app.route('/newPlayer')
+    .get(playersController.newPlayer)
+    .post(playersController.newPlayer);
+
+//app.post('/newPlayer', playersController.newPlayer);
 app.get('/quiz', quizController.quiz);
 app.get('/getQuestion', quizController.getQuestion);
-
+app.get('/game', lobbyController.game);
 app.get('/roomlist', lobbyController.roomlist);
 app.post('/newroom', lobbyController.newroom);
 
