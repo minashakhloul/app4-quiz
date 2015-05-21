@@ -7,7 +7,8 @@ var express = require('express')
     , expressSession = require('express-session')
     , bodyParser     = require('body-parser')
     , cookieParser   = require('cookie-parser')
-    , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest');
+    , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest')
+    , quizEvalTest = require('./routes/quiz-evalTestTest');
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
@@ -46,6 +47,7 @@ app.get('/session', function (req, res, next) {
 lobbyController.initManager(io);
 
 app.get('/quizTimerTest',QuizTimerControllerTest.test);
+app.get('/quizEvalTest',quizEvalTest.test);
 app.get('/startTest', databaseTest.startTest)
 app.get('/testDb', databaseTest.testDb)
 
