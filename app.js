@@ -14,7 +14,7 @@ var quizController    = require('./routes/quiz-controller');
 var playersController = require('./routes/players-controller');
 var loginController = require('./routes/login-controller');
 var mongoClient       = mongoDB.MongoClient;
-var dataBaseModule    = require('./database');
+var dataBaseModule    = require('./services/database');
 var db                = new dataBaseModule.Database(mongoClient, "mongodb://localhost:27017/quiz");
 
 //var app = module.exports = express.createServer();
