@@ -6,9 +6,7 @@ if (newQ.nbAnswers == 1)
 
 each p in newQ.prop
     span
-        input(type=answerType, name="prop", value=p.s, checked=false).
+        input(type=answerType, name="prop", value=p.s, checked=false, class="prop").
         | #{p.s}
         br
 
-button(id="validate-btn", class="btn", data-action="bea").
-    Valider

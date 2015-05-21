@@ -5,7 +5,8 @@ function Room( id, maxPlayer, master, players, quiz ) {
 	this.id = id;
 	this.maxPlayer 	= maxPlayer;
 	this.master = master;
-	this.players 	= players;
+	this.players 	   = players;
+	this.playerScores = []; //array of score eval objects
 	this.quiz      	= quiz;
 	this.status		= "notStarted";
 	this.timeoutQ	= -1;
@@ -20,7 +21,7 @@ function RoomManager(io) {
 Room.prototype.start = function() {
 	if( this.players.length > 0 ) {
 		this.status = "started";
-		this.timeoutQ = 3000;
+		this.timeoutQ = 8000;
 		this.currentQ = 0;
 	}
 	else {
@@ -43,6 +44,8 @@ Room.prototype.removePlayer = function( _id ) {
 	if(i < this.players.length)
 		this.players.slice(i, 1);
 };
+
+Room.prototype.
 
 RoomManager.prototype.getRoom = function(_id) {
 	var i = 0;

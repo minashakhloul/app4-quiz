@@ -18,8 +18,8 @@ function setupSocketIo() {
         	clientSocket.join('room-'+room.id);
         	clientSocket.emit('sync');
     	});
+    	
     });
-
 
 }
 
@@ -54,9 +54,8 @@ exports.quiz = function(req, res){
     //console.log(JSON.stringify(req.param));
     var room = manager.getRoom(req.params.id);
     if(room == null) {
-
-    }
-    else {
+        res.status(404).send("no such room");
+    } else {
         res.render('quiz', { title: 'Quiz', player: req.session.player, idRoom: room.id})
     }
 
@@ -83,6 +82,13 @@ exports.quizStart = function(req, res){
     	res.send('cannot start quiz if you are not the master');
 	}
 };
+
+exports.answer = function(req, res) {
+   var answer = req.body;
+   var room = manager.getRoom(req.body.room);
+   
+   console.log(answer);
+}
 
 exports.waitingQuiz = function(req, res) {
 

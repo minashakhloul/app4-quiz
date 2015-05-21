@@ -54,6 +54,8 @@ db.afterConnect = function(errorAfterConnect) {
         app.get('/quiz/:id', quizController.quiz);
         app.get('/quizStart/:id', quizController.quizStart);
         app.get('/getQuestion/:id', quizController.getQuestion);
+        app.post('/answer', quizController.answer);
+        
         app.get('/game', lobbyController.game);
         app.get('/roomlist', lobbyController.roomlist);
         app.post('/newroom', lobbyController.newroom);
