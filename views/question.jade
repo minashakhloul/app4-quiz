@@ -1,10 +1,10 @@
-h1 #{tmp.q}
+h1 #{newQ.q}
 
 - var answerType = "checkbox"
-if (tmp.nbAnswers == 1)
+if (newQ.nbAnswers == 1)
     - answerType = "radio"
 
-each p in tmp.prop
+each p in newQ.prop
     span
         input(type=answerType, name="prop", value=p.s, checked=false).
         | #{p.s}

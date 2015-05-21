@@ -7,6 +7,7 @@ if rooms && rooms.length > 0
 				td Quiz
 				td Status
 				td Players
+				td Master
 		tbody
 			each room in rooms
 				tr
@@ -19,5 +20,7 @@ if rooms && rooms.length > 0
 						#{room.status}
 					td.
 						#{room.players.length}/#{room.maxPlayer}
+					td.
+						#{room.master.nickname}
 else
 	p No rooms

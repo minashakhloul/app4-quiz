@@ -8,6 +8,9 @@ var db;
 var manager = undefined;
 var idRoom = 0;
 
+exports.getManager = function() {
+	return manager;
+};
 exports.initManager = function(__io, __db) {
 	io = __io;
 	db = __db;
@@ -50,9 +53,10 @@ exports.newroom = function(req, res) {
 		else {
 			var players = [];
 			players.push(req.session.player);
-			manager.add( new rooms.Room(idRoom++, req.body.nbPlayers, players, quiz) );
+			var roomtmp = new rooms.Room(idRoom++, req.body.nbPlayers, req.session.player, players, quiz);
+			manager.add( roomtmp );
 			console.log("Updated rooms: " + manager.getAll() + "; Redirection to waitingQuiz");
-			res.redirect('/waitingQuiz');
+			res.redirect('/waitingQuiz/' + roomtmp.id);
 		}
 	});
 

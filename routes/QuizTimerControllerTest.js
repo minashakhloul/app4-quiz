@@ -10,15 +10,15 @@ var room = { id : 10 , currentQ : -1 , timeoutQ : 1000 , quiz : quiz  };
 
 var quizeTimer = new Timer.Manager(room);
 
-quizeTimer.onBeginOfQuestion= function ( question , room ){
+quizeTimer.onBeginOfQuestion = function ( question , room ){
     console.log( "begin  " + question  );
 };
 
-quizeTimer.onEndOfQuestion= function ( question , room ){
+quizeTimer.onEndOfQuestion = function ( question , room ){
     console.log( "ending  " + question  );
 };
 
-quizeTimer.onEndOfQuiz= function ( room ){
+quizeTimer.onEndOfQuiz = function ( room ){
     console.log( "ending the Quiz "  );
 };
 // public

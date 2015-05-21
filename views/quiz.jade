@@ -5,14 +5,19 @@ block content
 
       var clientSocket = Client.connect('quiz');//io.connect('http://localhost:3000/quiz');
 
-      clientSocket.on('startQ', function(data) {
+      clientSocket.on('sync', function(data) {
          getQ();
+         console.log('sync event received');
       });
 
+      clientSocket.on('connect', function (data) {
+         console.log('connected, joining room');
+         clientSocket.emit('join', { id : #{idRoom} });
+      });
 
       function getQ() {
          $.ajax({
-            url: "/getQuestion",
+            url: "/getQuestion/#{idRoom}",
             type:'GET',
             success: function ( data ) {
                $("#question").html( data );
