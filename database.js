@@ -34,7 +34,7 @@ Database.prototype.connect = function (mongoClient, url) {
     mongoClient.connect(url, (function (err, db) {
         if (err) {
             console.log('Unable to connect to the mongoDB server. Error:', err);
-            throw new Error;
+            this.afterConnect(Error);
         } else {
             console.log('Connection established to', url);
             this.connection = db;
@@ -64,7 +64,7 @@ Database.prototype.selectQuiz = function (mongodb, idQuiz, collectionString, cb)
         } else {
             if (document != null) {
                 console.log("Retrieved quiz");
-                cb(document);
+                cb(null, document);
                 // this.quiz = document;
                 //console.log(JSON.stringify(this.quiz));
             }
@@ -81,7 +81,7 @@ Database.prototype.selectAllQuizes = function (collectionString, cb) {
         } else {
             console.log("Retrieved all quizes");
             //this.quizes = documents;
-            cb(documents);
+            cb(null, documents);
             //console.log(JSON.stringify(this.quizes));
         }
     }).bind(this));
@@ -95,7 +95,7 @@ Database.prototype.selectAllQuizesIds = function (collectionString, cb) {
             cb(err);
         } else {
             console.log("Retrieved all quizes ids");
-            cb(ids);
+            cb(null, ids);
             //this.quizesIds = ids;
             //console.log(JSON.stringify(this.quizesIds));
         }

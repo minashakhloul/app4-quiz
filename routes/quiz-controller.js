@@ -19,3 +19,8 @@ exports.quiz = function(req, res){
     //console.log(JSON.stringify(req.param));
     res.render('quiz', { title: 'Quiz', idSession : 0 })
 };
+
+exports.waitingQuiz = function(req, res) {
+    console.log("Wainting quiz");
+    res.send('waiting for the other players');
+};

@@ -14,7 +14,9 @@ block content
                tr
                    td Quiz
                    td
-                       select()
+                       select(name="quizID")
+                           each q in allQuizes
+                               option(value=q._id) #{q.title}
                tr
                    td Max Player
                    td
