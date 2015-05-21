@@ -1,16 +1,18 @@
 //Created by mina on 20/05/15.
-script(type='text/javascript').
-    $(start);
-    function start() {
-        var socket = io.connect('http://localhost:3000/databaseTest');
-        $("#poke-btn").click(function () {
-            $.ajax('/testDb').done(function (data) {
-                $('#quiz-list').html(data);
-            });
-        });
-    };
-h1= title
-button(id="poke-btn", class="btn", data-action="bea").
-    Test
+extends layout
 
-div(id="quiz-list")
+block content
+    script(type='text/javascript').
+        $(start);
+        function start() {
+            $("#poke-btn").click(function () {
+                $.ajax('/testDb').done(function (data) {
+                    $('#quiz-list').html(data);
+                });
+            });
+        };
+    h1= title
+    button(id="poke-btn", class="btn", data-action="bea").
+        Test
+
+    div(id="quiz-list")

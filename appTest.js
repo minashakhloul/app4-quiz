@@ -7,11 +7,12 @@ var express = require('express')
     , expressSession = require('express-session')
     , bodyParser     = require('body-parser')
     , cookieParser   = require('cookie-parser')
-    , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest');
+    , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest')
+    , databaseTest = require('./routes/databaseTest')
+    , adminPanel = require('./routes/adminPanel');
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
-var databaseTest = require('./routes/databaseTest')
 
 //var app = module.exports = express.createServer();
 var app = express();
@@ -24,7 +25,7 @@ var io = require('socket.io')(server);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
 app.use(cookieParser());
 app.use(expressSession({
@@ -46,9 +47,12 @@ app.get('/session', function (req, res, next) {
 lobbyController.initManager(io);
 
 app.get('/quizTimerTest',QuizTimerControllerTest.test);
-app.get('/startTest', databaseTest.startTest)
-app.get('/testDb', databaseTest.testDb)
-
+app.get('/startTest', databaseTest.startTest);
+app.get('/testDb', databaseTest.testDb);
+app.get('/adminPanel', adminPanel.home);
+app.get('/createQuiz', adminPanel.createQuiz);
+app.post('/listOfQuestions', adminPanel.listOfQuestions);
+app.post('/insertQuiz', adminPanel.insertQuiz);
 
 
 io.on('connection', function(socket) {
@@ -63,7 +67,6 @@ nsp_quiz.on('connection', function(clientSocket){
     clientSocket.emit('startQ', {q : "question"});
 
 });
-
 
 
 server.listen(3001);
