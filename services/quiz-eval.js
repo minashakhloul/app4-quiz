@@ -12,7 +12,7 @@ function _evaluateur( room  ){
     * */
     this.evaluateCurrentQuestion = function ( prop_selectionState  ){
 
-        currentQestion = this.room.quiz.questions[this.room.currentQ];
+        var currentQestion = this.room.quiz.questions[this.room.currentQ];
         if (currentQestion.prop.length != prop_selectionState.length) throw Error("incorrect prop_selectionState.length ");
 
         var evaluation = true ;
