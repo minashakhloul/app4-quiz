@@ -12,6 +12,10 @@ function setupSocketIo() {
         	console.log("Client connected");
         	console.log(data);
         	// add socket to room here
+        	
+        	var room = manager.getRoom(data.id);
+        	
+        	clientSocket.join('room-'+room.id);
         	clientSocket.emit('sync');
     	});
     });
@@ -69,13 +73,15 @@ exports.quizStart = function(req, res){
 
         timerManager.onEndOfQuestion = function ( question , room ) {
             console.log("question ending " + room.currentQ);
-            io.emit('sync');
+            io.to('room-' + room.id).emit('sync');
         };
 
         timerManager.start();
 
         res.redirect('/quiz/' + room.id);
-    }
+    } else {
+    	res.send('cannot start quiz if you are not the master');
+	}
 };
 
 exports.waitingQuiz = function(req, res) {
