@@ -6,7 +6,7 @@
 quizEval = require("../services/quiz-eval");
 
 
-
+room = { quiz : {}}
 
 
 

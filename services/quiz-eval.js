@@ -8,7 +8,7 @@ function _evaluateur( room  ){
     this.room = room ;
     this.score = 0;
     /*
-    * answersIndexes est un tableau de boolean contient pour chaque propsition si elle est sectioné ou pas
+    * prop_selectionState est un tableau de boolean contient pour chaque propsition si elle est sectioné ou pas
     * */
     this.evaluateCurrentQuestion = function ( prop_selectionState  ){
 
@@ -16,8 +16,8 @@ function _evaluateur( room  ){
         if (currentQestion.prop.length != prop_selectionState.length) throw Error("incorrect prop_selectionState.length ");
 
         var evaluation = true ;
-        for (var i = 0 ; i<prop_selectionState.length  && evaluation ; i++){
-            if (currentQestion.prop[i] != prop_selectionState[i]) evaluation = false ;
+        for (var i = 0 ; i< prop_selectionState.length  && evaluation ; i++){
+            if (currentQestion.prop[i].value != prop_selectionState[i]) evaluation = false ;
         }
 
         if (evaluation) this.score ++ ;
