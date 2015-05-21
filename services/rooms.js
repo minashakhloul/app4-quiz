@@ -34,8 +34,14 @@ Room.prototype.addPlayer = function( player ) {
 	}
 };
 
-Room.prototype.removePlayer = function( id ) {
-	this.players.slice(id, 1);
+Room.prototype.removePlayer = function( _id ) {
+
+	var i = 0;
+	while(i < this.players.length && this.players[i].id !== _id) {
+		i++;
+	}
+	if(i < this.players.length)
+		this.players.slice(i, 1);
 };
 
 RoomManager.prototype.add = function(room) {

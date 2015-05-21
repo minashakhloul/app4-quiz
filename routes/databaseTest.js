@@ -26,17 +26,17 @@ exports.testDb = function (req, res) {
         var q2 = new database.Question("Question 2", [prop1, prop2]);
         var quiz = {title: 'quiz1', questions: [q1, q2]};
         //db.insertQuiz(quiz, 'quizList');
-        db.selectAllQuizes('quizList', function (data) {
+        db.selectAllQuizes('quizList', function (err, data) {
             console.log(JSON.stringify(data));
             res.render('databaseTestView', {title: 'Result', quizes: data, layout: false});
         });
 
-        db.selectAllQuizesIds('quizList', function (data) {
+        db.selectAllQuizesIds('quizList', function (err, data) {
             console.log(JSON.stringify(data));
             //res.render('databaseTestView', {title: 'Result', quizesIds: data, layout: false});
         });
 
-        db.selectQuiz(mongodb, '555b921aad41f88e2b2fd217', 'quizList', function (data) {
+        db.selectQuiz(mongodb, '555b921aad41f88e2b2fd217', 'quizList', function (err, data) {
             console.log(JSON.stringify(data));
             //res.render('databaseTestView', {title: 'Result', quiz: data, layout: false});
         });
@@ -45,4 +45,4 @@ exports.testDb = function (req, res) {
     }
 
     db.connect(db.mongoClient, db.url);
-};
+}

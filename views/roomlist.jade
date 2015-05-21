@@ -1,3 +1,23 @@
-ul
-	each room in rooms
-		li= room.status - room.quiz.name - room.players / room.maxPlayer
+
+if rooms && rooms.length > 0
+	table
+		thead
+			tr
+				td ID
+				td Quiz
+				td Status
+				td Players
+		tbody
+			each room in rooms
+				tr
+					td
+						a(class='list-button', href='room').
+							#{room.id}
+					td.
+						#{room.quiz.title}
+					td.
+						#{room.status}
+					td.
+						#{room.players.length}/#{room.maxPlayer}
+else
+	p No rooms
