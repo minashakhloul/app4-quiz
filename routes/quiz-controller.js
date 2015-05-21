@@ -7,12 +7,16 @@ var manager = undefined;
 function setupSocketIo() {
     io.on('connection', function(clientSocket){
         console.log('someone connected to start the Quiz: ' + clientSocket.id);
+        
+    	clientSocket.on('join', function(data) {
+        	console.log("Client connected");
+        	console.log(data);
+        	// add socket to room here
+        	clientSocket.emit('sync');
+    	});
     });
 
-    io.on('join', function(clientSocket) {
-        console.log("Client connected");
-        clientSocket.emit('sync');
-    });
+
 }
 
 exports.init = function(_io, _manager){
