@@ -2,20 +2,27 @@
 extends layout
 
 block content
+    - var answerType = "checkbox";
     script(type='text/javascript').
         var myQuiz;
-        var answerType = "checkbox";
 
         $(addQuestionAndSavePrevious);
         $(validateQuiz);
+        $(toggleAnswerType);
 
         function addQuestionAndSavePrevious() {
             $("#generateQuestion-btn").click(function () {
                 //$("#generateQuestion-btn").hide();
-                var nb = $("#numberOfQuestions").val();
+                var title = $("#questionTitle").val();
+                var prop1 = $("#answer1").val();
+                var prop2 = $("#answer2").val();
+                var prop3 = $("#answer3").val();
+                var prop4 = $("#answer4œ").val();
+
                 $.post("/listOfQuestions", {numberOfQuestions: nb}).done(function (data) {
                     for (var i = 0; i < nb; i++) {
                         console.log(data);
+
                         $("#listOfQuestions").append(data);
                     }
                 });
@@ -33,49 +40,49 @@ block content
 
         function toggleAnswerType() {
             $("#toggleAnswerType").click(function () {
-                answerType = "radio"
+                answerType = "radio";
                 $("#listOfQuestions").hide();
             });
         }
 
-}
-div(id="quizCreation")
-    h1= title
-    div
-        span Title
-        input(type="text", name="title", id="quizTitle")
-        br
-        br
-    div(id="listOfQuestions")
-        div(id="question")
+
+    div(id="quizCreation")
+        h1= title
+        div
+            span Title
+            input(type="text", name="title", id="quizTitle")
+            br
+            br
+        div(id="listOfQuestions")
+            div(id="question")
+                div
+                    span Question
+                    input(type="text", id="questionTitle")
+                ul(id="answers")
+                    li
+                        span Answer 1
+                        input(type="text", id="answer1")
+                        input(type=answerType, name="prop", value="", checked=false).
+                    li
+                        span Answer 2
+                        input(type="text", id="answer2")
+                        input(type=answerType, name="prop", value="", checked=false).
+                    li
+                        span Answer 3
+                        input(type="text", id="answer3")
+                        input(type=answerType, name="prop", value="", checked=false).
+                    li
+                        span Answer 4
+                        input(type="text", id="answer4")
+                        input(type=answerType, name="prop", value="", checked=false).
+        div
+            button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
+                span.glyphicon-plus Add Question
+
             div
-                span Question
-                input(type="text", id="questionTitle")
-            ul(id="answers")
-                li
-                    span Answer 1
-                    input(type="text", id="answer1")
-                    input(type=answerType, name="prop", value="", checked=false).
-                li
-                    span Answer 2
-                    input(type="text", id="answer2")
-                    input(type=answerType, name="prop", value="", checked=false).
-                li
-                    span Answer 3
-                    input(type="text", id="answer3")
-                    input(type=answerType, name="prop", value="", checked=false).
-                li
-                    span Answer 4
-                    input(type="text", id="answer4")
-                    input(type=answerType, name="prop", value="", checked=false).
-    div
-        button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
-        span(class="glyphicon glyphicon-plus" aria-hidden="true") Add Question
+                button(id="validateQuiz", class="btn btn-success", aria-label="Validate").
+                    Validate
 
-        div
-            button(id="validateQuiz", class="btn btn-success", aria-label="Validate").
-                Validate
-
-        div
-            button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
-                Toggle Answer Type
+            div
+                button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
+                    Toggle Answer Type

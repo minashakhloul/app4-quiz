@@ -20,9 +20,9 @@ function Question(title, prop) {
     }
 }
 
-function Quiz(title) {
+function Quiz(title, questions) {
     this.title = title;
-    this.questions = [];
+    this.questions = questions;
 }
 
 function Database(mongoClient, url) {
