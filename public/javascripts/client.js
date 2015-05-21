@@ -14,6 +14,7 @@ Client.Lobby = ( function() {
 	pub.setup = function(el) {
 		$.ajax('/roomlist').done(function(data) {
 			el.html(data);
+			console.log(data);
 		});
 
 		roomListElem = el;

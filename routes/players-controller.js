@@ -26,7 +26,7 @@ exports.newPlayer = function(req, res){
         else {
 
             if (!sess.player) {
-                var p = new players.Player(req.body.nickname);
+                var p = new players.Player(req.body.nickname, sess.id);
                 sess.player = p;
             }
             res.redirect('/game');

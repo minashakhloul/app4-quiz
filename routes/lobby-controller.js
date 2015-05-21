@@ -33,7 +33,7 @@ exports.game = function(req, res) {
 }
 
 exports.roomlist = function(req, res) {
-	console.log("All rooms: " + manager.getAll());
+	console.log(manager.getAll());
 	res.render('roomlist', { rooms : manager.getAll(), layout : false } )
 }
 
@@ -49,9 +49,9 @@ exports.newroom = function(req, res) {
 		}
 		else {
 			var players = [];
-			players[sess.id] = new player.Player(sess.player.nickname);
+			players.push(req.session.player);
 			manager.add( new rooms.Room(idRoom++, req.body.nbPlayers, players, quiz) );
-			console.log("Updated rooms: " + manager.getAll() + "; Redirection to waintingQuiz");
+			console.log("Updated rooms: " + manager.getAll() + "; Redirection to waitingQuiz");
 			res.redirect('/waitingQuiz');
 		}
 	});
