@@ -3,7 +3,7 @@
  */
 
 var mongodb = require('mongodb')
-    , database = require('./../database');
+    , database = require('./../services/database');
 var io;
 
 exports.setIO = function (_io) {
