@@ -50,7 +50,7 @@ db.afterConnect = function(errorAfterConnect) {
         console.log('Error connection: ' + errorAfterConnect);
     }
     else {
-        app.get('/', loginController.home);
+        app.get('/', home.index);
         app.all('/newPlayer', playersController.newPlayer);
         app.get('/quiz/:id', quizController.quiz);
         app.get('/quizStart/:id', quizController.quizStart);

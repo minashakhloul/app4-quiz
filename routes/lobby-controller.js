@@ -1,6 +1,5 @@
 var rooms = require('../services/rooms');
-var player = require('../services/players');
-var player = require('../services/players');
+var player  = require('../services/players');
 var mongodb = require('mongodb');
 
 var io;
@@ -28,7 +27,6 @@ exports.game = function(req, res) {
 			res.redirect('/game');
 		}
 		else {
-			console.log('Get all quizes: ' + allQuizes );
 			res.render('game', { title: 'Game', allQuizes : allQuizes });
 		}
 	});
@@ -51,9 +49,8 @@ exports.newroom = function(req, res) {
 			res.redirect('/game');
 		}
 		else {
-			var players = [];
-			players.push(req.session.player);
-			var roomtmp = new rooms.Room(idRoom++, req.body.nbPlayers, req.session.player, players, quiz);
+			var roomtmp = new rooms.Room(idRoom++, req.body.nbPlayers, req.session.player, quiz);
+         roomtmp.addPlayer(req.session.player);
 			manager.add( roomtmp );
 			console.log("Updated rooms: " + manager.getAll() + "; Redirection to waitingQuiz");
 			res.redirect('/waitingQuiz/' + roomtmp.id);

@@ -4,5 +4,5 @@
 
 exports.home = function(req, res){
 
-    res.render('home', { title: 'Login Page' });
+    res.render('index', { title: 'Login Page' });
 };

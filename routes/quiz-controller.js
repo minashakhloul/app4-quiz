@@ -71,9 +71,13 @@ exports.quizStart = function(req, res){
         room.start();
 
         timerManager.onEndOfQuestion = function ( question , room ) {
-            console.log("question ending " + room.currentQ);
             io.to('room-' + room.id).emit('sync');
         };
+        
+        timerManager.onEndOfQuiz =  function ( room ) {
+            console.log("quiz ending " );
+            console.log(room.playerScores);
+        }; 
 
         timerManager.start();
 
@@ -84,10 +88,14 @@ exports.quizStart = function(req, res){
 };
 
 exports.answer = function(req, res) {
-   var answer = req.body;
-   var room = manager.getRoom(req.body.room);
+   var answer = req.body['answer[]'];
+   var room   = manager.getRoom(req.body.room);
+   var player = req.session.player;
    
-   console.log(answer);
+   
+   room.submitAnswer(player.id, answer);
+   
+   res.send('ok');
 }
 
 exports.waitingQuiz = function(req, res) {
