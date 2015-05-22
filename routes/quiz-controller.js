@@ -31,20 +31,24 @@ exports.init = function(_io, _manager){
 };
 
 exports.getQuestion = function(req, res){
-    //console.log(req.body);
     var room = manager.getRoom(req.params.id);
+
     if(room == null) {
         res.status(404).send('room not available');
-    }
-    else {
+    }  else {
         console.log('currentQ = ' + room.currentQ);
-        console.log(room.quiz);
-        var question = room.quiz.questions[room.currentQ];
-
-        if(!question) {
-            res.status(404).send('question not found');
+        console.log(room.quizEnded());
+        if(room.quizEnded()) {
+            console.log('sending score fragment');
+            res.render('score', {players : room.players, playerScores : room.playerScores});
         } else {
-            res.render('question', {newQ: question, layout: false});
+            var question = room.quiz.questions[room.currentQ];
+
+            if(!question) {
+                res.status(404).send('question not found');
+            } else {
+                res.render('question', {newQ: question, layout: false});
+            }
         }
     }
 
@@ -75,8 +79,9 @@ exports.quizStart = function(req, res){
         };
         
         timerManager.onEndOfQuiz =  function ( room ) {
-            console.log("quiz ending " );
-            console.log(room.playerScores);
+            console.log("quiz ending" );
+            room.status = 'ended';
+            io.to('room-' + room.id).emit('sync');
         }; 
 
         timerManager.start();

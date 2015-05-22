@@ -35,7 +35,13 @@ Room.prototype.addPlayer = function( player ) {
 Room.prototype.submitAnswer = function(playerId, answer) {
    var scorer = this.playerScores[playerId];
    scorer.evaluateCurrentQuestion(answer);
-}
+};
+
+Room.prototype.quizEnded = function() {
+	//return (this.currentQ == this.quiz.questions.length);
+	console.log(this.status);
+	return this.status == 'ended';
+};
 
 Room.prototype.removePlayer = function( _id ) {
 

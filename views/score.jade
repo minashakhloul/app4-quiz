@@ -1,0 +1,16 @@
+//
+   Created by Nabil on 5/22/2015.
+
+h2 Score
+
+
+table.table
+   thead
+      tr
+         td Player
+         td Score
+   tbody
+      each player in players
+         tr
+            td= player.nickname
+            td= playerScores[player.id].score
