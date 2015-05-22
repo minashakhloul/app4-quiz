@@ -8,7 +8,7 @@ var express = require('express')
     , bodyParser     = require('body-parser')
     , cookieParser   = require('cookie-parser')
     , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest')
-    , quizEvalTest = require('./routes/quiz-evalTestTest');
+    , quizEvalTest = require('./routes/quiz-evalTest');
 
 var lobbyController = require('./routes/lobby-controller');
 var quizController = require('./routes/quiz-controller');
