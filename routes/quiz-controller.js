@@ -1,11 +1,12 @@
 
 
 var timer = require('../services/QuizTimer');
-var io;
+var nspQuiz;
+var nspWaitQuiz;
 var manager = undefined;
 
 function setupSocketIo() {
-    io.on('connection', function(clientSocket){
+    nspQuiz.on('connection', function(clientSocket){
         console.log('someone connected to start the Quiz: ' + clientSocket.id);
         
     	clientSocket.on('join', function(data) {
@@ -23,11 +24,27 @@ function setupSocketIo() {
 
 }
 
-exports.init = function(_io, _manager){
-    io = _io;
+function setupWaitSocketIo() {
+
+    nspWaitQuiz.on('connection', function(clientSocket){
+
+        console.log('someone connected to start the Quiz: ' + clientSocket.id);
+
+         clientSocket.on('join', function(data) {
+             console.log("-----Client connected and waiting for the start in room : " + data.id);
+             clientSocket.join('wRoom-'+data.id);
+         });
+    });
+}
+
+
+exports.init = function(_nspQuiz, _nspWaitQuiz, _manager){
+    nspQuiz = _nspQuiz;
+    nspWaitQuiz = _nspWaitQuiz
     manager = _manager;
 
     setupSocketIo();
+    setupWaitSocketIo();
 };
 
 exports.getQuestion = function(req, res){
@@ -68,20 +85,22 @@ exports.quizStart = function(req, res){
 
 
     if( room.master.id === sess.player.id ) {
+
+        nspWaitQuiz.to('wRoom-' + room.id).emit('startQuiz');
+
         room.start();
 
         timerManager.onEndOfQuestion = function ( question , room ) {
-            io.to('room-' + room.id).emit('sync');
+            nspQuiz.to('room-' + room.id).emit('sync');
         };
-        
+
         timerManager.onEndOfQuiz =  function ( room ) {
             console.log("quiz ending " );
             console.log(room.playerScores);
-        }; 
+        };
 
         timerManager.start();
 
-        res.redirect('/quiz/' + room.id);
     } else {
     	res.send('cannot start quiz if you are not the master');
 	}

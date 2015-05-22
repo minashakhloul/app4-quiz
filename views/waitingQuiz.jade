@@ -4,13 +4,19 @@ block content
 
       $(function() {
 
-        $("#quizStart-link").click( function() {
-            /*var clientSocket = Client.connect('quiz');
-             clientSocket.on('connect', function (data) {
-             console.log('connected, joining room');
-             clientSocket.emit('join', { id : #{idRoom} });
-             });*/
-        });
+         var clientSocket = Client.connect('waitQuiz');
+
+         clientSocket.on('startQuiz', function (data) {
+            console.log('startQuiz event received');
+            window.location.replace("http://localhost:3000/quiz/#{room.id}");
+         });
+
+         clientSocket.on('connect', function (data) {
+
+            console.log('connected, waiting the game');
+            clientSocket.emit('join', { id : #{room.id} });
+         });
+
       });
 
    p Wainting for other players

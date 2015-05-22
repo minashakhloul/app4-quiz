@@ -40,10 +40,11 @@ app.use(expressSession({
 
 
 var nsp_quiz = io.of('/quiz');
+var nsp_waitQuiz = io.of('/waitQuiz');
 
 lobbyController.initManager(io, db);
 playersController.init(io);
-quizController.init(nsp_quiz, lobbyController.getManager());
+quizController.init(nsp_quiz, nsp_waitQuiz, lobbyController.getManager());
 
 
 db.afterConnect = function(errorAfterConnect) {
