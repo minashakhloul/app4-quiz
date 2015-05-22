@@ -106,6 +106,7 @@ exports.waitingQuiz = function(req, res) {
         res.status(500).send("Room's id not found");
     }
     else {
+        room.addPlayer(req.session.player);
         res.render('waitingQuiz', {title: "Waiting for players", room: room, player: req.session.player});
     }
 
