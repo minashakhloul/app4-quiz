@@ -1,26 +1,22 @@
+var scoring = require('./quiz-eval');
 
-
-function Room( id, maxPlayer, players, quiz ) {
+function Room( id, maxPlayer, master, quiz ) {
 
 	this.id = id;
 	this.maxPlayer 	= maxPlayer;
-	this.players 	= players;
+	this.master = master;
+	this.players 	   = [];
+	this.playerScores = []; //array of score eval objects
 	this.quiz      	= quiz;
 	this.status		= "notStarted";
 	this.timeoutQ	= -1;
 	this.currentQ	= -1;
 }
 
-function RoomManager(io) {
-	this.io    = io;
-	this.rooms = [];
-
-}
-
 Room.prototype.start = function() {
 	if( this.players.length > 0 ) {
 		this.status = "started";
-		this.timeoutQ = 15;
+		this.timeoutQ = 8000;
 		this.currentQ = 0;
 	}
 	else {
@@ -31,8 +27,15 @@ Room.prototype.start = function() {
 Room.prototype.addPlayer = function( player ) {
 	if( this.players.length < this.maxPlayer ) {
 		this.players[player.id] = player;
+		this.playerScores[player.id] = new scoring.ScoreCounter( this );
+		console.log('created scorer');
 	}
 };
+
+Room.prototype.submitAnswer = function(playerId, answer) {
+   var scorer = this.playerScores[playerId];
+   scorer.evaluateCurrentQuestion(answer);
+}
 
 Room.prototype.removePlayer = function( _id ) {
 
@@ -42,6 +45,22 @@ Room.prototype.removePlayer = function( _id ) {
 	}
 	if(i < this.players.length)
 		this.players.slice(i, 1);
+};
+
+function RoomManager(io) {
+	this.io    = io;
+	this.rooms = [];
+}
+
+RoomManager.prototype.getRoom = function(_id) {
+	var i = 0;
+	while( i < this.rooms.length && this.rooms[i].id != _id) {
+		i++;
+	}
+	if(i < this.rooms.length)
+		return this.rooms[i];
+	else
+		return null;
 };
 
 RoomManager.prototype.add = function(room) {

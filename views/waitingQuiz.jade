@@ -1,0 +1,20 @@
+extends layout
+block content
+   script(type='text/javascript').
+
+      $(function() {
+
+        $("#quizStart-link").click( function() {
+            /*var clientSocket = Client.connect('quiz');
+             clientSocket.on('connect', function (data) {
+             console.log('connected, joining room');
+             clientSocket.emit('join', { id : #{idRoom} });
+             });*/
+        });
+      });
+
+   p Wainting for other players
+
+   if player.id == room.master.id
+      a(id="quizStart-link", class="", href='/quizStart/#{room.id}').
+         Start Quiz

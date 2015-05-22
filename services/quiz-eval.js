@@ -10,14 +10,18 @@ function _evaluateur( room  ){
     /*
     * prop_selectionState est un tableau de boolean contient pour chaque propsition si elle est sectioné ou pas
     * */
-    this.evaluateCurrentQuestion = function ( prop_selectionState  ){
+    this.evaluateCurrentQuestion = function ( prop_selectionState ){
 
+         console.log(prop_selectionState);
         var currentQestion = this.room.quiz.questions[this.room.currentQ];
-        if (currentQestion.prop.length != prop_selectionState.length) throw Error("incorrect prop_selectionState.length ");
+        console.log(currentQestion.prop);
+        if (currentQestion.prop.length != prop_selectionState.length) 
+         throw Error("incorrect prop_selectionState.length ");
 
         var evaluation = true ;
-        for (var i = 0 ; i< prop_selectionState.length  && evaluation ; i++){
-            if (currentQestion.prop[i].value != prop_selectionState[i]) evaluation = false ;
+        for (var i = 0 ; i < prop_selectionState.length  && evaluation ; i++){
+            var boolAnswer = (prop_selectionState[i] == 'true');
+            if (currentQestion.prop[i].value != boolAnswer) evaluation = false ;
         }
 
         if (evaluation) this.score ++ ;
@@ -25,5 +29,5 @@ function _evaluateur( room  ){
 
 } // index
 
-exports.evaluateur = _evaluateur;
+exports.ScoreCounter = _evaluateur;
 

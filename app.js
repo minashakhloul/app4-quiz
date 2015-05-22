@@ -39,36 +39,28 @@ app.use(expressSession({
 }));
 
 
+var nsp_quiz = io.of('/quiz');
+
 lobbyController.initManager(io, db);
 playersController.init(io);
+quizController.init(nsp_quiz, lobbyController.getManager());
 
 db.afterConnect = function(errorAfterConnect) {
     if( errorAfterConnect ) {
         console.log('Error connection: ' + errorAfterConnect);
     }
     else {
-        app.get('/', loginController.home);
+        app.get('/', home.index);
         app.all('/newPlayer', playersController.newPlayer);
-        app.get('/quiz', quizController.quiz);
-        app.get('/getQuestion', quizController.getQuestion);
+        app.get('/quiz/:id', quizController.quiz);
+        app.get('/quizStart/:id', quizController.quizStart);
+        app.get('/getQuestion/:id', quizController.getQuestion);
+        app.post('/answer', quizController.answer);
+        
         app.get('/game', lobbyController.game);
         app.get('/roomlist', lobbyController.roomlist);
         app.post('/newroom', lobbyController.newroom);
-        app.get('/waitingQuiz', quizController.waitingQuiz);
-        //app.get('/room:id', );
-
-
-        io.on('connection', function(socket) {
-            //console.log(" a user connected:  " +  socket.id );
-        });
-
-        var nsp_quiz = io.of('/quiz');
-
-        nsp_quiz.on('connection', function(clientSocket){
-            console.log('someone connected to start the Quiz: ' + clientSocket.id);
-            clientSocket.emit('startQ', {q : "question"});
-
-        });
+        app.get('/waitingQuiz/:id', quizController.waitingQuiz);
 
         server.listen(3000);
     }
