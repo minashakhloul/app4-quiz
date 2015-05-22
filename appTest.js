@@ -9,7 +9,7 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , QuizTimerControllerTest = require('./routes/QuizTimerControllerTest')
     , databaseTest = require('./routes/databaseTest')
-    , adminPanel = require('./routes/adminPanel');
+    , adminPanel = require('./routes/adminPanel')
     , quizEvalTest = require('./routes/quiz-evalTest');
 
 var lobbyController = require('./routes/lobby-controller');
