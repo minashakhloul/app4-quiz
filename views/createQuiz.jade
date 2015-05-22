@@ -53,8 +53,18 @@ block content
 
         function toggleAnswerType() {
             $("#toggleAnswerType").click(function () {
-                answerType = (answerType == "checkbox") ? "radio" : "checkbox";
-
+                //answerType = "radio";
+                //var type = !{JSON.stringify(answerType)};
+                if("#{answerType}" == "checkbox") {
+                    answerType = "radio";
+                    //answerType = type;
+                    console.log("if");
+                }else{
+                    //type = "checkbox";
+                    answerType = "checkbox";
+                    console.log("else");
+                }
+                //console.log(type);
                 $("#answers").each(function(){
                     $(this).find(".answer").prop('type', answerType);
                 });
@@ -101,5 +111,5 @@ block content
                     Validate
 
 
-                button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
+                //button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
                     Toggle Answer Type
