@@ -7,6 +7,7 @@ var express = require('express')
     , expressSession = require('express-session')
     , bodyParser     = require('body-parser')
     , cookieParser   = require('cookie-parser')
+    , adminPanel = require('./routes/adminPanel')
     , mongoDB        = require('mongodb');
 
 var lobbyController   = require('./routes/lobby-controller');
