@@ -14,7 +14,7 @@ var room = { quiz : {questions:[
         {prop :[{value : false },{value : true },{value : false}]}
                 ]} , currentQ: 0};
 
-var eval = new quizEval.evaluateur(room);
+var eval = new quizEval.ScoreCounter(room);
 
 eval.evaluateCurrentQuestion([true  , false , false ]);
 room.currentQ ++;

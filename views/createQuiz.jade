@@ -50,7 +50,7 @@ block content
                 });
             });
         }
-
+        //not used!
         function toggleAnswerType() {
             $("#toggleAnswerType").click(function () {
                 //answerType = "radio";
@@ -71,45 +71,62 @@ block content
             });
         }
 
-
-    div(id="quizCreation")
-        h1= title
-        div
-            h2 Title
-            input(type="text", name="title", id="quizTitle")
+    .container
+        div.row(id="quizCreation")
+            h1.h1= title
+            div.row
+                h2.h2 Title
+                .row
+                    .col-lg-6
+                        input.form-control(type="text", name="title", id="quizTitle")
+                        br
+                        br
+            div.row(id="listOfQuestions")
+                div(id="question")
+                    div
+                        h3.h3 Question
+                        .row
+                            .col-lg-6
+                                input.form-control(type="text", id="questionTitle")
+                                br
+                                br
+                    ul.list-unstyled(id="answers")
+                        .row
+                        li
+                            .col-lg-6
+                                .input-group
+                                    span.input-group-addon
+                                        input(type=answerType, id="isAnswer1Checked", name="prop", class="answer", value="", checked=false).
+                                    input.form-control(type="text", id="answer1")
+                        .row
+                        li
+                            .col-lg-6
+                                .input-group
+                                    span.input-group-addon
+                                        input(type=answerType, id="isAnswer2Checked", name="prop", class="answer",value="", checked=false).
+                                    input.form-control(type="text", id="answer2")
+                        .row
+                        li
+                            .col-lg-6
+                                .input-group
+                                    span.input-group-addon
+                                        input(type=answerType, id="isAnswer3Checked", name="prop", class="answer", value="", checked=false).
+                                    input.form-control(type="text", id="answer3")
+                        .row
+                        li
+                            .col-lg-6
+                                .input-group
+                                    span.input-group-addon
+                                        input(type=answerType, id="isAnswer4Checked", name="prop", class="answer", value="", checked=false).
+                                    input.form-control(type="text", id="answer4")
             br
-            br
-        div(id="listOfQuestions")
-            div(id="question")
-                div
-                    h3 Question
-                    input(type="text", id="questionTitle")
-                    br
-                ul(id="answers")
-                    li
-                        span Answer 1
-                        input(type="text", id="answer1")
-                        input(type=answerType, id="isAnswer1Checked", name="prop", class="answer", value="", checked=false).
-                    li
-                        span Answer 2
-                        input(type="text", id="answer2")
-                        input(type=answerType, id="isAnswer2Checked", name="prop", class="answer",value="", checked=false).
-                    li
-                        span Answer 3
-                        input(type="text", id="answer3")
-                        input(type=answerType, id="isAnswer3Checked", name="prop", class="answer", value="", checked=false).
-                    li
-                        span Answer 4
-                        input(type="text", id="answer4")
-                        input(type=answerType, id="isAnswer4Checked", name="prop", class="answer", value="", checked=false).
-        div
-            button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
-                span.glyphicon.glyphicon-plus
+            div
+                button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
+                    span.glyphicon.glyphicon-plus
+
+                    button.pull-right(id="validateQuiz", class="btn btn-success", aria-label="Validate").
+                        Validate
 
 
-                button(id="validateQuiz", class="btn btn-success", aria-label="Validate").
-                    Validate
-
-
-                //button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
-                    Toggle Answer Type
+                    //button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
+                        Toggle Answer Type

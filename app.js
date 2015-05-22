@@ -44,7 +44,7 @@ var nsp_quiz = io.of('/quiz');
 lobbyController.initManager(io, db);
 playersController.init(io);
 quizController.init(nsp_quiz, lobbyController.getManager());
-
+adminPanel.init(db);
 
 db.afterConnect = function(errorAfterConnect) {
     if( errorAfterConnect ) {
@@ -62,6 +62,11 @@ db.afterConnect = function(errorAfterConnect) {
         app.get('/roomlist', lobbyController.roomlist);
         app.post('/newroom', lobbyController.newroom);
         app.get('/waitingQuiz/:id', quizController.waitingQuiz);
+
+        app.get('/adminPanel', adminPanel.home);
+        app.get('/createQuiz', adminPanel.createQuiz);
+        app.post('/listOfQuestions', adminPanel.listOfQuestions);
+        app.post('/insertQuiz', adminPanel.insertQuiz);
 
         server.listen(3000);
     }
