@@ -42,6 +42,7 @@ app.use(expressSession({
 lobbyController.initManager(io, db);
 playersController.init(io);
 
+
 db.afterConnect = function(errorAfterConnect) {
     if( errorAfterConnect ) {
         console.log('Error connection: ' + errorAfterConnect);

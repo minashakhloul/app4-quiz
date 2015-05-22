@@ -2,6 +2,12 @@
  * Created by mina on 20/05/15.
  */
 
+var db;
+
+exports.init = function(_db){
+    db = _db;
+}
+
 exports.home = function (req, res) {
     res.render('adminPanel', {title: 'Administration Panel'});
 };
@@ -15,6 +21,13 @@ exports.listOfQuestions = function (req, res) {
 };
 
 exports.insertQuiz = function (req, res) {
-    console.log(req.body.quiz);
-    res.render('addQuiz', {quiz: req.body.quiz});
+    var quiz = JSON.parse(req.body.quiz);
+    db.insertQuiz(quiz, "quizList", function( err) {
+        if( err ) {
+            res.redirect('/createQuiz');
+        }
+        else {
+            res.render('addQuiz', { quiz : quiz });
+        }
+    });
 };

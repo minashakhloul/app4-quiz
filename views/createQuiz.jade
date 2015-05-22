@@ -3,45 +3,61 @@ extends layout
 
 block content
     - var answerType = "checkbox";
+    - var myQuiz;
     script(type='text/javascript').
-        var myQuiz;
-
+        myQuiz = new Model.Quiz("", []);
         $(addQuestionAndSavePrevious);
         $(validateQuiz);
         $(toggleAnswerType);
 
         function addQuestionAndSavePrevious() {
             $("#generateQuestion-btn").click(function () {
-                //$("#generateQuestion-btn").hide();
-                var title = $("#questionTitle").val();
-                var prop1 = $("#answer1").val();
-                var prop2 = $("#answer2").val();
-                var prop3 = $("#answer3").val();
-                var prop4 = $("#answer4œ").val();
-
-                $.post("/listOfQuestions", {numberOfQuestions: nb}).done(function (data) {
-                    for (var i = 0; i < nb; i++) {
-                        console.log(data);
-
-                        $("#listOfQuestions").append(data);
-                    }
-                });
+                console.log("adding a question");
+                addQ();
+                console.log("added the question!!!!");
+                clearAll();
             });
         };
 
+        function addQ(){
+            var title = $("#questionTitle").val();
+            var prop1 = new Model.Prop($("#answer1").val(), $("#isAnswer1Checked").is(":checked"));
+            var prop2 = new Model.Prop($("#answer2").val(), $("#isAnswer2Checked").is(":checked"));
+            var prop3 = new Model.Prop($("#answer3").val(), $("#isAnswer3Checked").is(":checked"));
+            var prop4 = new Model.Prop($("#answer4").val(), $("#isAnswer4Checked").is(":checked"));
+            var question = new Model.Question(title, [prop1, prop2, prop3, prop4]);
+            myQuiz.setTitle($("#quizTitle").val());
+            myQuiz.addQuestion(question);
+        }
+
+        function clearAll(){
+            $("#questionTitle").val("");
+            $("#answer1").val("");
+            $("#isAnswer1Checked").attr("checked", false);
+            $("#answer2").val("");
+            $("#isAnswer2Checked").attr("checked", false);
+            $("#answer3").val("");
+            $("#isAnswer3Checked").attr("checked", false);
+            $("#answer4").val("");
+            $("#isAnswer4Checked").attr("checked", false);
+        }
+
         function validateQuiz() {
             $("#validateQuiz").click(function () {
-                $.post("/insertQuiz", {quiz: myQuiz}).done(function (data) {
+                addQ();
+                $.post("/insertQuiz", {quiz: JSON.stringify(myQuiz)}).done(function (data) {
                     $("#quizCreation").html(data);
-                    // $("#listOfQuestions").hide();
                 });
             });
         }
 
         function toggleAnswerType() {
             $("#toggleAnswerType").click(function () {
-                answerType = "radio";
-                $("#listOfQuestions").hide();
+                answerType = (answerType == "checkbox") ? "radio" : "checkbox";
+
+                $("#answers").each(function(){
+                    $(this).find(".answer").prop('type', answerType);
+                });
             });
         }
 
@@ -49,40 +65,41 @@ block content
     div(id="quizCreation")
         h1= title
         div
-            span Title
+            h2 Title
             input(type="text", name="title", id="quizTitle")
             br
             br
         div(id="listOfQuestions")
             div(id="question")
                 div
-                    span Question
+                    h3 Question
                     input(type="text", id="questionTitle")
+                    br
                 ul(id="answers")
                     li
                         span Answer 1
                         input(type="text", id="answer1")
-                        input(type=answerType, name="prop", value="", checked=false).
+                        input(type=answerType, id="isAnswer1Checked", name="prop", class="answer", value="", checked=false).
                     li
                         span Answer 2
                         input(type="text", id="answer2")
-                        input(type=answerType, name="prop", value="", checked=false).
+                        input(type=answerType, id="isAnswer2Checked", name="prop", class="answer",value="", checked=false).
                     li
                         span Answer 3
                         input(type="text", id="answer3")
-                        input(type=answerType, name="prop", value="", checked=false).
+                        input(type=answerType, id="isAnswer3Checked", name="prop", class="answer", value="", checked=false).
                     li
                         span Answer 4
                         input(type="text", id="answer4")
-                        input(type=answerType, name="prop", value="", checked=false).
+                        input(type=answerType, id="isAnswer4Checked", name="prop", class="answer", value="", checked=false).
         div
             button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
-                span.glyphicon-plus Add Question
+                span.glyphicon.glyphicon-plus
 
-            div
+
                 button(id="validateQuiz", class="btn btn-success", aria-label="Validate").
                     Validate
 
-            div
+
                 button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
                     Toggle Answer Type
