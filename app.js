@@ -45,6 +45,7 @@ lobbyController.initManager(io, db);
 playersController.init(io);
 quizController.init(nsp_quiz, lobbyController.getManager());
 
+
 db.afterConnect = function(errorAfterConnect) {
     if( errorAfterConnect ) {
         console.log('Error connection: ' + errorAfterConnect);

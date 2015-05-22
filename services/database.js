@@ -20,10 +20,14 @@ function Question(title, prop) {
     }
 }
 
-function Quiz(title) {
+function Quiz(title, questions) {
     this.title = title;
-    this.questions = [];
+    this.questions = questions;
 }
+
+Quiz.prototype.addQuestion = function(question){
+    this.questions.push(question);
+};
 
 function Database(mongoClient, url) {
     this.mongoClient = mongoClient;
@@ -43,13 +47,15 @@ Database.prototype.connect = function (mongoClient, url) {
     }).bind(this));
 }
 
-Database.prototype.insertQuiz = function (quiz, collectionString) {
+Database.prototype.insertQuiz = function (quiz, collectionString, cb) {
     var collection = this.connection.collection(collectionString);
-    collection.insertOne(quiz, (function (err, result) {
+    collection.insertOne(quiz, (function (err) {
         if (err) {
             console.log(err);
+            cb(err);
         } else {
             console.log('Inserted document into the "quizList" collection.');
+            cb(null);
         }
     }).bind(this));
 }
@@ -105,3 +111,4 @@ Database.prototype.selectAllQuizesIds = function (collectionString, cb) {
 exports.Database = Database;
 exports.Question = Question;
 exports.Prop = Prop;
+exports.Quiz = Quiz;

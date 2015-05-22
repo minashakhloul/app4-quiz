@@ -1,0 +1,115 @@
+//Created by mina on 20/05/15.
+extends layout
+
+block content
+    - var answerType = "checkbox";
+    - var myQuiz;
+    script(type='text/javascript').
+        myQuiz = new Model.Quiz("", []);
+        $(addQuestionAndSavePrevious);
+        $(validateQuiz);
+        $(toggleAnswerType);
+
+        function addQuestionAndSavePrevious() {
+            $("#generateQuestion-btn").click(function () {
+                console.log("adding a question");
+                addQ();
+                console.log("added the question!!!!");
+                clearAll();
+            });
+        };
+
+        function addQ(){
+            var title = $("#questionTitle").val();
+            var prop1 = new Model.Prop($("#answer1").val(), $("#isAnswer1Checked").is(":checked"));
+            var prop2 = new Model.Prop($("#answer2").val(), $("#isAnswer2Checked").is(":checked"));
+            var prop3 = new Model.Prop($("#answer3").val(), $("#isAnswer3Checked").is(":checked"));
+            var prop4 = new Model.Prop($("#answer4").val(), $("#isAnswer4Checked").is(":checked"));
+            var question = new Model.Question(title, [prop1, prop2, prop3, prop4]);
+            myQuiz.setTitle($("#quizTitle").val());
+            myQuiz.addQuestion(question);
+        }
+
+        function clearAll(){
+            $("#questionTitle").val("");
+            $("#answer1").val("");
+            $("#isAnswer1Checked").attr("checked", false);
+            $("#answer2").val("");
+            $("#isAnswer2Checked").attr("checked", false);
+            $("#answer3").val("");
+            $("#isAnswer3Checked").attr("checked", false);
+            $("#answer4").val("");
+            $("#isAnswer4Checked").attr("checked", false);
+        }
+
+        function validateQuiz() {
+            $("#validateQuiz").click(function () {
+                addQ();
+                $.post("/insertQuiz", {quiz: JSON.stringify(myQuiz)}).done(function (data) {
+                    $("#quizCreation").html(data);
+                });
+            });
+        }
+
+        function toggleAnswerType() {
+            $("#toggleAnswerType").click(function () {
+                //answerType = "radio";
+                //var type = !{JSON.stringify(answerType)};
+                if("#{answerType}" == "checkbox") {
+                    answerType = "radio";
+                    //answerType = type;
+                    console.log("if");
+                }else{
+                    //type = "checkbox";
+                    answerType = "checkbox";
+                    console.log("else");
+                }
+                //console.log(type);
+                $("#answers").each(function(){
+                    $(this).find(".answer").prop('type', answerType);
+                });
+            });
+        }
+
+
+    div(id="quizCreation")
+        h1= title
+        div
+            h2 Title
+            input(type="text", name="title", id="quizTitle")
+            br
+            br
+        div(id="listOfQuestions")
+            div(id="question")
+                div
+                    h3 Question
+                    input(type="text", id="questionTitle")
+                    br
+                ul(id="answers")
+                    li
+                        span Answer 1
+                        input(type="text", id="answer1")
+                        input(type=answerType, id="isAnswer1Checked", name="prop", class="answer", value="", checked=false).
+                    li
+                        span Answer 2
+                        input(type="text", id="answer2")
+                        input(type=answerType, id="isAnswer2Checked", name="prop", class="answer",value="", checked=false).
+                    li
+                        span Answer 3
+                        input(type="text", id="answer3")
+                        input(type=answerType, id="isAnswer3Checked", name="prop", class="answer", value="", checked=false).
+                    li
+                        span Answer 4
+                        input(type="text", id="answer4")
+                        input(type=answerType, id="isAnswer4Checked", name="prop", class="answer", value="", checked=false).
+        div
+            button(id="generateQuestion-btn", type="button", class="btn btn-default btn-lg", data-action="bea")
+                span.glyphicon.glyphicon-plus
+
+
+                button(id="validateQuiz", class="btn btn-success", aria-label="Validate").
+                    Validate
+
+
+                //button(id="toggleAnswerType", class="btn btn-primary", aria-label="Toggle Answer Type").
+                    Toggle Answer Type
